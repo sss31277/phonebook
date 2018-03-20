@@ -1,17 +1,22 @@
 #include <stdlib.h>
 #include <string.h>
-
 #include "phonebook_opt.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int hashFunc (char lastName[])
 {
-    int seed=31;
-    long long hashNum=0;
+    int seed=131;
+    int hashNum=0;
 
-    while (*lastName)
+    while (*lastName){
+        printf("*lastName:%d\n",*lastName);
+        printf("hashNum*seed:%d\n",hashNum*seed);
+
         hashNum=hashNum*seed+(*lastName++);
-
-    return hashNum%1024;
+    }
+    printf("%d\n", hashNum%5471);
+    return hashNum%5471;
 }
 
 entry *findName(char lastName[], entry *pHead)
@@ -36,7 +41,7 @@ entry *append(char lastName[], entry *e)
     entry *Newentry;
     int hashNum=hashFunc(lastName);
     Newentry = (entry *) malloc(sizeof(entry));
-    
+
     entry *current=hashTable[hashNum].pNext;
 
     while(current!=NULL)
